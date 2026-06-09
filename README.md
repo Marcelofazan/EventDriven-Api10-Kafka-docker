@@ -42,7 +42,7 @@ docker compose down --remove-orphans
 | **Kafka Cluster**| http://localhost:19000 |
 
 
-#### Consumer — ConsumerWorkService
+#### ⚙️ Consumer — ConsumerWorkService
 
 Worker Service que sobe um **BackgroundService (Worker)** . No **ExecuteAsync**:
 
