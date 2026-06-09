@@ -2,18 +2,19 @@
 Exemplo de criação de Event-Driven Architecture (EDA) utilizando Apache Kafka em C# ASP.NET Core 10   
 
 
-| Tecnologia | Descrição                  |
+| Tecnologia | Descrição     |
 |----------------|-----------|
+| **API Minimal**| Abordagem simplificada e leve para construir APIs HTTP com o mínimo de arquivos, dependências e código |
 | **Kafka**      | O broker de mensagens em si. Recebe mensagens do Producer e entrega pro Consumer. |
 | **Kafdrop**    | UI web pra visualizar tópicos e mensagens. |
-| **API Minimal**| Abordagem simplificada e leve para construir APIs HTTP com o mínimo de arquivos, dependências e código |
+
 
 #### 🔄 Executar a aplicação
 
 | Projeto        | Descrição |
 |----------------|-----------|
-| **exemploKafkaAPI**  | Expõe endpoint `POST /` que envia mensagem ao Kafka. |
 | **ConsumerWorkService**| Consome mensagens do tópico Kafka em background. |
+| **exemploKafkaAPI**  | Expõe endpoint `POST /` que envia mensagem ao Kafka. |
 
 VSCode Terminal [1]
 ```bash
@@ -38,8 +39,8 @@ docker compose down --remove-orphans
 
 | Host           | URL       |
 |----------------|-----------|
-| **POST**         | http://localhost:5107/?message=TesteKafka |
 | **Kafka Cluster**| http://localhost:19000 |
+| **POST**         | http://localhost:5107/?message=TesteKafka |
 
 
 #### ⚙️ Consumer — ConsumerWorkService
