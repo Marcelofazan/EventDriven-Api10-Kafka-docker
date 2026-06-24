@@ -10,7 +10,7 @@ Exemplo de comunicação API Event-Driven Architecture por mensageria com Apache
 | **Kafka**      | O broker de mensagens em si. Recebe mensagens do Producer e entrega pro Consumer. |
 | **Kafdrop**    | UI web pra visualizar tópicos e mensagens. |
 
-#### 🔍 Requisitos do Projeto
+#### 💬 Requisitos do Projeto
 - Necessário **Docker** instalado.
 
 #### 🔄 Executar a aplicação
