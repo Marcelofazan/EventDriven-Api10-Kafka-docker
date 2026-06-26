@@ -28,7 +28,7 @@ ou
 docker compose down 
 ```
 
-#### 🔄 Executar a aplicação local
+#### 🔄 Executar a aplicação Desenvolvimento local
 
 VSCode Terminal [2]
 ```bash
