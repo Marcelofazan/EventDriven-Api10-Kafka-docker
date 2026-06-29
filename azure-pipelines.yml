@@ -8,22 +8,35 @@ steps:
 # 1. Inicia o Kafka e o Zookeeper em background usando Docker
 - script: |
     docker network create kafka-net
-    
-    # Adicionado --network e variável de ambiente obrigatória do Zookeeper
     docker run -d --name zookeeper --network kafka-net -p 2181:2181 -e ZOOKEEPER_CLIENT_PORT=2181 confluentinc/cp-zookeeper:latest
-    
-    # Corrigido --ports para -p
     docker run -d --name kafka --network kafka-net -p 9092:9092 -e KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 confluentinc/cp-kafka:latest
+    echo "Aguardando inicialização do Kafka..."
+    sleep 15
   displayName: 'Iniciar Kafka no Docker'
 
-# 2. Restaura as dependências do projeto
-- script: dotnet restore
+# 2. CORREÇÃO: Vincula o projeto de testes à solução para o .NET gerenciar tudo centralizado
+- script: |
+    dotnet sln exemploApiKafka.slnx add exemploApiKafka.Tests/exemploApiKafka.Tests.csproj
+  displayName: 'Vincular Projeto de Testes à Solução'
+
+# 3. Restaura todas as dependências da solução inteira agora que ela está completa
+- script: dotnet restore exemploApiKafka.slnx
   displayName: 'Recuperar os pacotes'
 
-# 3. Compila o código do projeto
-- script: dotnet build
+# 4. Compila a solução inteira (incluindo o projeto de testes recém-adicionado)
+- script: dotnet build exemploApiKafka.slnx --configuration Debug
   displayName: 'Buildando o projeto'
 
-# 4. Executa os testes automatizados integrados com o Kafka local
-- script: dotnet test --no-build --verbosity normal
+# 5. Executa os testes consumindo o build feito no passo anterior
+- script: |
+    dotnet test exemploApiKafka.Tests/exemploApiKafka.Tests.csproj --no-build --configuration Debug --logger "trx;LogFileName=resultado.trx" --results-directory $(Build.SourcesDirectory)/TestResults
   displayName: 'Executar Testes de Integração'
+
+# 6. Publica os resultados encontrados na pasta fixa
+- task: PublishTestResults@2
+  displayName: 'Publicar Resultados dos Testes'
+  inputs:
+    testResultsFormat: 'VSTest'
+    testResultsFiles: 'resultado.trx'
+    searchFolder: '$(Build.SourcesDirectory)/TestResults'
+    failTaskOnFailedTests: true
