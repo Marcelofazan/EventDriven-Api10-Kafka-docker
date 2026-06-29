@@ -26,6 +26,21 @@ Remover Container
 docker compose down 
 ```
 
+#### 🧪 Testes Unitários
+- Docker Kafka ➡️ Restore ➡️ Build ➡️ Test ➡️ Publish
+
+VSCode Terminal [4]
+Executar testes Container 
+```bash
+docker compose --profile test up --build --abort-on-container-exit unit-tests
+```
+
+VSCode Terminal [5]
+Remover Container 
+```bash
+docker compose --profile test down --volumes --remove-orphans
+```
+
 #### 🔄 Executar a aplicação Desenvolvimento local
 
 VSCode Terminal [2]
@@ -47,20 +62,6 @@ dotnet run
 | **exemploKafkaAPI**  | Expõe endpoint `GET /` que envia mensagem ao Kafka. |
 
 - Internamente usa `ProducerServices`, que cria um `IProducer<Null, string>` via `ProducerBuilder` e chama `ProduceAsync` no tópico configurado.
-
-#### 🧪 Testes Unitários
-Docker Kafka ➡️ Restore ➡️ Build ➡️ Test ➡️ Publish
-VSCode Terminal [4]
-Criar Container 
-```bash
-docker compose --profile test up --build --abort-on-container-exit unit-tests
-```
-
-VSCode Terminal [5]
-Remover Container 
-```bash
-docker compose --profile test down --volumes --remove-orphans
-```
 
 #### Fluxo de dados
 Worker Service que sobe um **BackgroundService (Worker)** . No **ExecuteAsync**:
