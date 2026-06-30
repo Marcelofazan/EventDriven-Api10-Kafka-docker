@@ -26,7 +26,7 @@ Remover Container
 docker compose down 
 ```
 
-#### 🔍 Testes Unitários
+#### 🔍 Executar Testes Unitários
 - Docker Kafka ➡️ Restore ➡️ Build ➡️ Test ➡️ Publish
 
 VSCode Terminal [4]
